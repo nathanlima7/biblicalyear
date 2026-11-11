@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bíblia 2027</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Plano de Leitura 2027</h1>
+    <button id="btn-sair" onclick="fazerLogout()" style="display:none;">Sair</button>
+  </header>
+
+  <main id="app">
+    <!-- TELA DE LOGIN / CADASTRO -->
+    <section id="tela-auth" class="tela">
+      <div class="auth-container">
+        <h2 id="auth-titulo">Entrar</h2>
+        <form id="form-auth" onsubmit="handleAuth(event)">
+          <div id="campo-nome" style="display: none;">
+            <label>Nome</label>
+            <input type="text" id="input-nome">
+          </div>
+          <label>E-mail</label>
+          <input type="email" id="input-email" required>
+          <label>Senha</label>
+          <input type="password" id="input-senha" required>
+          <button type="submit" id="btn-auth-submit">Entrar</button>
+        </form>
+        <p style="text-align: center; margin-top: 1rem;">
+          <a href="#" onclick="toggleAuthMode(event)" id="auth-toggle-text">Não tem conta? Cadastre-se</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- TELA 1: CARDS DOS MESES -->
+    <section id="tela-meses" class="tela">
+      <div class="grid-meses" id="grid-meses"></div>
+    </section>
+
+    <!-- TELA 2: DIAS DO MÊS -->
+    <section id="tela-dias" class="tela">
+      <button class="btn-voltar" onclick="voltarParaMeses()">← Voltar</button>
+      <h2 id="titulo-mes"></h2>
+      <div class="lista-dias" id="lista-dias"></div>
+    </section>
+
+    <!-- TELA 3: LEITURA -->
+    <section id="tela-leitura" class="tela">
+      <button class="btn-voltar" onclick="voltarParaDias()">← Voltar</button>
+      <div id="leitura-conteudo"></div>
+      <div class="footer-leitura">
+        <label class="checkbox-lido">
+          <input type="checkbox" id="check-lido" onchange="toggleLido()">
+          Marcar dia como lido
+        </label>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>

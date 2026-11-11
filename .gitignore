@@ -1,0 +1,16 @@
+# Dependências do Node
+node_modules/
+backend/node_modules/
+
+# Variáveis de ambiente (Senhas e URLs do banco)
+.env
+backend/.env
+
+# Arquivos de sistema e logs
+.DS_Store
+Thumbs.db
+npm-debug.log*
+netlify-debug.log*
+
+# Pasta de build do Netlify (se for gerada)
+.netlify/
