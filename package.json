@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "netlify-cli": "^27.16.3"
   }
 }
