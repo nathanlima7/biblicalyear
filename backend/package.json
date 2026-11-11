@@ -1,19 +1,15 @@
 {
-  "name": "backend",
+  "name": "app-biblia-backend",
   "version": "1.0.0",
-  "description": "Backend do app Biblia 2027",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "netlify dev"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@neondatabase/serverless": "^1.2.0",
-    "bcryptjs": "^3.0.3",
-    "jsonwebtoken": "^9.0.3",
-    "netlify-cli": "^27.16.3"
+    "@neondatabase/serverless": "^0.9.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
   }
 }

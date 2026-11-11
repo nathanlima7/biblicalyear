@@ -1,6 +1,7 @@
 import { carregarDados, plano2027, getTextoDia } from './data.js';
 
-const API_BASE = '/api'; 
+// Troque pelo link que o Render vai te dar após o deploy
+const API_BASE = 'https://seu-app-backend.onrender.com/api'; 
 let token = localStorage.getItem('token');
 let isCadastro = false;
 
