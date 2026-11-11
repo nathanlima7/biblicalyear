@@ -1,6 +1,7 @@
 [build]
   publish = "frontend"
   functions = "backend/netlify/functions"
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/api/*"
