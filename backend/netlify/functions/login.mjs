@@ -2,16 +2,15 @@ import { neon } from '@neondatabase/serverless';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const DATABASE_URL = "SUA_URL_DO_NEON_AQUI";
-const JWT_SECRET = "sua_chave_secreta_super_segura_123";
+const JWT_SECRET = process.env.JWT_SECRET || "sua_chave_secreta_super_segura_123";
 
 export default async (req) => {
   if (req.method !== 'POST') return new Response("Method not allowed", { status: 405 });
-  const { email, senha } = await req.json();
-
-  const sql = neon(DATABASE_URL);
-
+  
   try {
+    const { email, senha } = await req.json();
+    const sql = neon(process.env.DATABASE_URL);
+
     const users = await sql`SELECT * FROM usuarios WHERE email = ${email}`;
     if (users.length === 0) {
       return new Response(JSON.stringify({ error: "E-mail ou senha incorretos" }), { status: 401 });
@@ -29,6 +28,7 @@ export default async (req) => {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
+    console.error("Erro no login:", error);
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 };

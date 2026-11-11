@@ -2,16 +2,15 @@ import { neon } from '@neondatabase/serverless';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const DATABASE_URL = "SUA_URL_DO_NEON_AQUI";
-const JWT_SECRET = "sua_chave_secreta_super_segura_123"; // Em produção, use variável de ambiente
+const JWT_SECRET = process.env.JWT_SECRET || "sua_chave_secreta_super_segura_123";
 
 export default async (req) => {
   if (req.method !== 'POST') return new Response("Method not allowed", { status: 405 });
-  const { nome, email, senha } = await req.json();
-
-  const sql = neon(DATABASE_URL);
-
+  
   try {
+    const { nome, email, senha } = await req.json();
+    const sql = neon(process.env.DATABASE_URL);
+
     // Verifica se o email já existe
     const existing = await sql`SELECT id FROM usuarios WHERE email = ${email}`;
     if (existing.length > 0) {
@@ -30,13 +29,13 @@ export default async (req) => {
     `;
     const user = result[0];
 
-    // Gera o token JWT válido por 30 dias
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '30d' });
 
     return new Response(JSON.stringify({ token, user }), {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
+    console.error("Erro no registro:", error);
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 };
