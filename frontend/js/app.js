@@ -1,7 +1,7 @@
 import { carregarDados, plano2027, getTextoDia } from './data.js';
 
 // Troque pelo link que o Render vai te dar após o deploy
-const API_BASE = 'https://biblicalyear.onrender.com';
+const API_BASE = 'https://biblicalyear.onrender.com/api';
 let token = localStorage.getItem('token');
 let isCadastro = false;
 
