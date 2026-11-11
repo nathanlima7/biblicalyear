@@ -1,7 +1,10 @@
 [build]
   publish = "frontend"
   functions = "backend/netlify/functions"
+
+[functions]
   node_bundler = "esbuild"
+  external_node_modules = ["@neondatabase/serverless", "bcryptjs", "jsonwebtoken"]
 
 [[redirects]]
   from = "/api/*"
