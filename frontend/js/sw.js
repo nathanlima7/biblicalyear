@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biblia-v1';
+const CACHE_NAME = 'biblia-v3'; // Versão atualizada para forçar o navegador a baixar os arquivos novos
 const ASSETS = [
   '/',
   '/index.html',
@@ -12,6 +12,22 @@ const ASSETS = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+  );
+  self.skipWaiting(); // Força o novo Service Worker a assumir imediatamente
+});
+
+self.addEventListener('activate', (e) => {
+  // Deleta caches antigos
+  e.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
   );
 });
 

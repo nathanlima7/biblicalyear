@@ -9,8 +9,18 @@
 </head>
 <body>
   <header>
+    <!-- Menu Flutuante de Marcação -->
+<div id="menu-marcacao" class="menu-marcacao" style="display: none;">
+  <button onclick="aplicarMarcacao('amarelo')" style="background-color: #fef08a;" title="Amarelo"></button>
+  <button onclick="aplicarMarcacao('verde')" style="background-color: #bbf7d0;" title="Verde"></button>
+  <button onclick="aplicarMarcacao('azul')" style="background-color: #bfdbfe;" title="Azul"></button>
+  <button onclick="aplicarMarcacao(null)" style="background-color: transparent; border: 1px solid #ccc;" title="Remover Marcação">🗑️</button>
+</div>
     <h1>Plano de Leitura 2027</h1>
-    <button id="btn-sair" onclick="fazerLogout()" style="display:none;">Sair</button>
+    <div class="header-actions">
+      <button id="btn-tema" onclick="toggleTema()" title="Alternar Tema">🌙</button>
+      <button id="btn-sair" onclick="fazerLogout()" style="display:none;">Sair</button>
+    </div>
   </header>
 
   <main id="app">
@@ -26,7 +36,7 @@
           <label>E-mail</label>
           <input type="email" id="input-email" required>
           <label>Senha</label>
-          <input type="password" id="input-senha" required>
+          <input type="password" id="input-senha" required minlength="6">
           <button type="submit" id="btn-auth-submit">Entrar</button>
         </form>
         <p style="text-align: center; margin-top: 1rem;">
@@ -37,6 +47,11 @@
 
     <!-- TELA 1: CARDS DOS MESES -->
     <section id="tela-meses" class="tela">
+      <div id="continuar-leitura-container" style="display: none; margin-bottom: 1.5rem; text-align: center;">
+        <button class="btn-primario" onclick="irParaProximoDia()" id="btn-continuar">
+          Continuar Leitura →
+        </button>
+      </div>
       <div class="grid-meses" id="grid-meses"></div>
     </section>
 
@@ -49,8 +64,16 @@
 
     <!-- TELA 3: LEITURA -->
     <section id="tela-leitura" class="tela">
-      <button class="btn-voltar" onclick="voltarParaDias()">← Voltar</button>
+      <div class="leitura-header">
+        <button class="btn-voltar" onclick="voltarParaDias()">← Voltar</button>
+        <div class="controles-fonte">
+          <button onclick="mudarFonte(-1)">A-</button>
+          <button onclick="mudarFonte(1)">A+</button>
+        </div>
+      </div>
+      
       <div id="leitura-conteudo"></div>
+      
       <div class="footer-leitura">
         <label class="checkbox-lido">
           <input type="checkbox" id="check-lido" onchange="toggleLido()">
@@ -59,6 +82,9 @@
       </div>
     </section>
   </main>
+
+  <!-- NOVO: Container para as notificações Toast -->
+  <div id="toast-container"></div>
 
   <script src="js/app.js" type="module"></script>
 </body>

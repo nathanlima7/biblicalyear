@@ -12,7 +12,7 @@ export async function carregarDados() {
   plano2027 = await resPlano.json();
   const rawBiblia = await resBiblia.json();
   
-  // Normaliza o JSON da Bíblia (formato do thiagobodruk/bible)
+  // Normaliza o JSON da Bíblia (formato do thiagobodrik/bible)
   biblia = rawBiblia.map(livro => ({
     ...livro,
     nome: livro.name

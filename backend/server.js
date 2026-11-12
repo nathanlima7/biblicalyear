@@ -124,6 +124,42 @@ app.post('/api/update-mes', autenticar, async (req, res) => {
   }
 });
 
+// ROTA: Buscar Marcações
+app.get('/api/get-marcacoes', autenticar, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const marcacoes = await sql`SELECT livro, capitulo, versiculo, cor FROM marcacoes WHERE usuario_id = ${userId}`;
+    res.json(marcacoes);
+  } catch (error) {
+    console.error("Erro ao buscar marcações:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ROTA: Salvar/Atualizar Marcação
+app.post('/api/update-marcacao', autenticar, async (req, res) => {
+  try {
+    const { livro, capitulo, versiculo, cor } = req.body;
+    const userId = req.userId;
+
+    if (!cor) {
+      // Se a cor for vazia (null), o usuário está removendo a marcação
+      await sql`DELETE FROM marcacoes WHERE usuario_id = ${userId} AND livro = ${livro} AND capitulo = ${capitulo} AND versiculo = ${versiculo}`;
+    } else {
+      // Insere ou atualiza a cor se já existir
+      await sql`
+        INSERT INTO marcacoes (usuario_id, livro, capitulo, versiculo, cor) 
+        VALUES (${userId}, ${livro}, ${capitulo}, ${versiculo}, ${cor}) 
+        ON CONFLICT (usuario_id, livro, capitulo, versiculo) DO UPDATE SET cor = ${cor}
+      `;
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Erro ao salvar marcação:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Inicialização do servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
